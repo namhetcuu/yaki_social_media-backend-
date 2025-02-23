@@ -1,0 +1,15 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /zosh
+spring:
+  datasource:
+    url: "jdbc:mysql://localhost:3307/zosh_social_youtube"
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+jwt:
+  signerKey: "VHdMwE5j6vyyZ0Xw2NuxQ4nz0pA6/495uzwRCYjIgc0yRmZyjpGOn9pAy0bVvf/J"
