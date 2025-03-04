@@ -1,6 +1,6 @@
 package com.zosh.zosh_social_youtube.repository;
 
-import com.zosh.zosh_social_youtube.model.SavedPost;
+import com.zosh.zosh_social_youtube.entity.SavedPost;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

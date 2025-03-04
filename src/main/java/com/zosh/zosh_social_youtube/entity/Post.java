@@ -1,4 +1,4 @@
-package com.zosh.zosh_social_youtube.model;
+package com.zosh.zosh_social_youtube.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -3,11 +3,10 @@ package com.zosh.zosh_social_youtube.mapper;
 import com.zosh.zosh_social_youtube.dto.request.PostCreationRequest;
 import com.zosh.zosh_social_youtube.dto.request.PostUpdateRequest;
 import com.zosh.zosh_social_youtube.dto.response.PostResponse;
-import com.zosh.zosh_social_youtube.model.Post;
-import com.zosh.zosh_social_youtube.model.User;
+import com.zosh.zosh_social_youtube.entity.Post;
+import com.zosh.zosh_social_youtube.entity.User;
 import org.mapstruct.*;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 

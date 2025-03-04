@@ -6,8 +6,9 @@ import com.zosh.zosh_social_youtube.dto.response.PostResponse;
 import com.zosh.zosh_social_youtube.exception.AppException;
 import com.zosh.zosh_social_youtube.exception.ErrorCode;
 import com.zosh.zosh_social_youtube.mapper.PostMapper;
-import com.zosh.zosh_social_youtube.model.Post;
-import com.zosh.zosh_social_youtube.model.User;
+import com.zosh.zosh_social_youtube.entity.Post;
+import com.zosh.zosh_social_youtube.entity.SavedPost;
+import com.zosh.zosh_social_youtube.entity.User;
 import com.zosh.zosh_social_youtube.repository.PostRepository;
 import com.zosh.zosh_social_youtube.repository.SavedPostRepository;
 import com.zosh.zosh_social_youtube.repository.UserRepository;
@@ -15,14 +16,11 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -166,16 +164,24 @@ public class PostService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
 
-        // 3. Kiểm tra xem user đã lưu bài viết này chưa
-        if (user.getSavedPosts().contains(post)) {
+        // 3. Kiểm tra xem bài viết đã được lưu hay chưa
+        boolean alreadySaved = user.getSavedPosts().stream()
+                .anyMatch(savedPost -> savedPost.getPost().equals(post));
+
+        if (alreadySaved) {
             throw new AppException(ErrorCode.POST_ALREADY_SAVED);
         }
 
-        // 4. Lưu bài viết vào danh sách bài viết đã lưu của user
-        user.getSavedPosts().add(post);
-        userRepository.save(user);
+        // 4. Tạo một đối tượng SavedPost và lưu vào danh sách
+        SavedPost savedPost = new SavedPost();
+        savedPost.setUser(user);
+        savedPost.setPost(post);
 
-        // 5. Chuyển đổi Post thành PostResponse để trả về
+        user.getSavedPosts().add(savedPost);
+        savedPostRepository.save(savedPost);
+
+        // 5. Trả về thông tin bài viết
         return postMapper.toPostResponse(post);
     }
+
 }

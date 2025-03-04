@@ -1,7 +1,7 @@
 package com.zosh.zosh_social_youtube.repository;
 
-import com.zosh.zosh_social_youtube.model.Post;
-import com.zosh.zosh_social_youtube.model.User;
+import com.zosh.zosh_social_youtube.entity.Post;
+import com.zosh.zosh_social_youtube.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
