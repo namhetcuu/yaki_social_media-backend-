@@ -1,5 +1,6 @@
 package com.zosh.zosh_social_youtube.entity;
 
+import com.zosh.zosh_social_youtube.enums.EnumRole;
 import com.zosh.zosh_social_youtube.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
@@ -37,28 +38,29 @@ public class User {
     @Enumerated(EnumType.STRING) // Đảm bảo lưu dưới dạng Enum thay vì String
     Gender gender;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    @Builder.Default
-    Set<Role> roles = new HashSet<>();;
+    Set<String> roles;
 
     // Danh sách những người mình follow
     @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<UserFollowing> followings = new ArrayList<>();;
+    Set<UserFollowing> following = new HashSet<>();
 
     // Danh sách những người follow mình
     @OneToMany(mappedBy = "followingUser", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<UserFollower> followers = new ArrayList<>();;
+    Set<UserFollower> followers = new HashSet<>();;
 
     // Danh sách các bài viết đã lưu
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<SavedPost> savedPosts = new ArrayList<>();;
+    Set<SavedPost> savedPosts = new HashSet<>();
 
-    public void setRoles(Set<Role> roles) { // ⚡ Thêm setter cho roles
-        this.roles = roles;
+    // 💡 Thêm quan hệ với Reels
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Reels> reels;
+
+    public Set<UserFollower> getFollowers() {
+        return followers;
+    }
+
+    public Set<UserFollowing> getFollowing() {
+        return following;
     }
 }

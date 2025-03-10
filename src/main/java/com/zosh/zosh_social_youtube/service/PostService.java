@@ -36,8 +36,8 @@ public class PostService {
     /**
      * Tạo bài viết mới
      */
-    public PostResponse createPost(PostCreationRequest request, String userId) {
-        User user = userRepository.findById(userId)
+    public PostResponse createPost(PostCreationRequest request) {
+        User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         // Chuyển đổi từ request sang Post entity
@@ -145,7 +145,8 @@ public class PostService {
         if (post.getLikedUsers().contains(user)) {
             // Nếu đã thích thì bỏ thích (Unlike)
             post.getLikedUsers().remove(user);
-            post.setLikeCount(post.getLikeCount() - 1);
+            //post.setLikeCount(post.getLikeCount() - 1);
+            post.setLikeCount(Math.max(0, post.getLikeCount() - 1)); // Đảm bảo không giảm dưới 0
         } else {
             // Nếu chưa thích thì thêm vào danh sách
             post.getLikedUsers().add(user);

@@ -9,7 +9,6 @@ import com.zosh.zosh_social_youtube.dto.request.AuthenticationRequest;
 import com.zosh.zosh_social_youtube.dto.request.IntrospectRequest;
 import com.zosh.zosh_social_youtube.dto.response.AuthenticationResponse;
 import com.zosh.zosh_social_youtube.dto.response.IntrospectResponse;
-import com.zosh.zosh_social_youtube.entity.Role;
 import com.zosh.zosh_social_youtube.exception.AppException;
 import com.zosh.zosh_social_youtube.exception.ErrorCode;
 import com.zosh.zosh_social_youtube.entity.User;
@@ -100,14 +99,21 @@ public class AuthenticationService {
         }
     }
 
-    private String buildScope(User user) {
-        Set<Role> roles = user.getRoles();
-        if (CollectionUtils.isEmpty(roles)) {
-            return "";
-        }
+//    private String buildScope(User user) {
+//        Set<Role> roles = user.getRoles();
+//        if (CollectionUtils.isEmpty(roles)) {
+//            return "";
+//        }.
+//
+//        return roles.stream()
+//                .map(Role::getName) // ✅ Sửa lại để lấy tên role đúng cách
+//                .collect(Collectors.joining(" "));
+//    }
+    private String buildScope(User user){
+        StringJoiner stringJoiner = new StringJoiner(" ");
+        if (!CollectionUtils.isEmpty(user.getRoles()))
+            user.getRoles().forEach(stringJoiner::add);
 
-        return roles.stream()
-                .map(Role::getName) // ✅ Sửa lại để lấy tên role đúng cách
-                .collect(Collectors.joining(" "));
+        return stringJoiner.toString();
     }
 }

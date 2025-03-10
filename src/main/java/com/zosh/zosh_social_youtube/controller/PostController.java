@@ -44,8 +44,9 @@ public class PostController {
                                          @PathVariable String userId) {
 
         //String userId = userDetails.getUsername();
+        request.setUserId(userId);
         return ApiResponse.<PostResponse>builder()
-                .result(postService.createPost(request,userId))
+                .result(postService.createPost(request))
                 .build();
     }
     @DeleteMapping("/{postId}/users/{userId}")

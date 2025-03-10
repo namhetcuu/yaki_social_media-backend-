@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "user_followers")
+//Class này lưu trữ danh sách người đang theo dõi một người dùng.
 public class UserFollower {
 
     @Id

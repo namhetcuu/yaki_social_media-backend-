@@ -70,11 +70,20 @@ public class UserController {
                 .build();
     }
 
-    @GetMapping("/myInfo")
+    @GetMapping("/profile")
     public ApiResponse<UserResponse> getMyInfo() {
         log.info("Fetching info for the current user");
         return ApiResponse.<UserResponse>builder()
                 .result(userService.getMyInfo())
+                .build();
+    }
+
+    @PutMapping("/follow/{userId1}/{userId2}")
+    public ApiResponse<UserResponse> followUser(@PathVariable String userId1, @PathVariable String userId2) {
+        UserResponse userResponse = userService.followUser(userId1, userId2);
+
+        return ApiResponse.<UserResponse>builder()
+                .result(userResponse)
                 .build();
     }
 }

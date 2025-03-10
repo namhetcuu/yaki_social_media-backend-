@@ -28,7 +28,5 @@ public class UserUpdateRequest {
 
     Gender gender;
 
-    List<String> roles;
-
 
 }

@@ -24,7 +24,10 @@ public enum ErrorCode {
     INVALID_ROLE(1014,"Invalid role",HttpStatus.BAD_REQUEST),
     INTERNAL_SERVER_ERROR(1015,"Internal server error",HttpStatus.INTERNAL_SERVER_ERROR),
     INVALID_REQUEST(1016,"Invalid request",HttpStatus.BAD_REQUEST),
-    DATABASE_ERROR(1017,"Database error",HttpStatus.INTERNAL_SERVER_ERROR)
+    DATABASE_ERROR(1017,"Database error",HttpStatus.INTERNAL_SERVER_ERROR),
+    UNAUTHORIZED(1018,"Unauthorized",HttpStatus.UNAUTHORIZED),
+    ALREADY_FOLLOWING(1019,"Already following",HttpStatus.CONFLICT),
+    COMMENT_NOT_FOUND(1020,"Comment not found",HttpStatus.NOT_FOUND),
 
 //    FIRSTNAME_REQUIRED(1008,"first name must given",HttpStatus.BAD_REQUEST),
 //    LASTNAME_REQUIRED(1009,"last name must given",HttpStatus.BAD_REQUEST),
