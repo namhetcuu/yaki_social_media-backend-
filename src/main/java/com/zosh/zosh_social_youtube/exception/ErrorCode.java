@@ -28,6 +28,7 @@ public enum ErrorCode {
     UNAUTHORIZED(1018,"Unauthorized",HttpStatus.UNAUTHORIZED),
     ALREADY_FOLLOWING(1019,"Already following",HttpStatus.CONFLICT),
     COMMENT_NOT_FOUND(1020,"Comment not found",HttpStatus.NOT_FOUND),
+    CHAT_NOT_FOUND(1021, "Chat not found",HttpStatus.NOT_FOUND),
 
 //    FIRSTNAME_REQUIRED(1008,"first name must given",HttpStatus.BAD_REQUEST),
 //    LASTNAME_REQUIRED(1009,"last name must given",HttpStatus.BAD_REQUEST),
