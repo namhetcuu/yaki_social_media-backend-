@@ -13,6 +13,19 @@ import java.util.Optional;
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, String> {
 
+    //SIZE(c.users) = 2 → Chỉ lấy các cuộc trò chuyện có đúng 2 thành viên (chat cá nhân).
+    //:userId1 MEMBER OF c.users → Kiểm tra userId1 có trong danh sách users của cuộc trò chuyện.
+    //:userId2 MEMBER OF c.users → Kiểm tra userId2 có trong danh sách users.
+    //Trả về danh sách Chat, phòng trường hợp có nhiều cuộc trò chuyện trùng lặp.
+    @Query("SELECT c FROM Chat c WHERE :user1 MEMBER OF c.users AND :user2 MEMBER OF c.users")
+    List<Chat> findPersonalChat(@Param("user1") User user1, @Param("user2") User user2);
+
+
+
+
+
+
+
     // Tìm danh sách chat mà user tham gia dựa trên userId
     List<Chat> findByUsers_Id(String userId);
 

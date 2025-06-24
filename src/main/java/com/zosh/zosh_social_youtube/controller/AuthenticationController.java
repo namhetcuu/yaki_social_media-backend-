@@ -4,6 +4,7 @@ import com.nimbusds.jose.JOSEException;
 import com.zosh.zosh_social_youtube.dto.request.ApiResponse;
 import com.zosh.zosh_social_youtube.dto.request.AuthenticationRequest;
 import com.zosh.zosh_social_youtube.dto.request.IntrospectRequest;
+import com.zosh.zosh_social_youtube.dto.request.LogoutRequest;
 import com.zosh.zosh_social_youtube.dto.response.AuthenticationResponse;
 import com.zosh.zosh_social_youtube.dto.response.IntrospectResponse;
 import com.zosh.zosh_social_youtube.service.AuthenticationService;
@@ -45,5 +46,13 @@ public class AuthenticationController {
                 .result(result)
                 .build();
     }
+    
+//    @PostMapping("/logout")
+//    ApiResponse<IntrospectResponse> logout(@RequestBody LogoutRequest request){
+//        log.info("Received logout request");
+//        var result = authenticationService.logout(request);
+//        return ApiResponse.<IntrospectResponse>builder()
+//                .result(result).build();
+//    }
 }
 

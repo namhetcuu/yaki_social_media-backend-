@@ -70,6 +70,12 @@ public interface UserMapper {
 
     //@Mapping(target = "followers", expression = "java(mapFollowersToIds(user.getFollowers()))")
     //@Mapping(target = "following", expression = "java(mapFollowingsToIds(user.getFollowing()))")
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "username", source = "username")
+    @Mapping(target = "email", source = "email")
+    @Mapping(target = "roles", source = "roles")
+    @Mapping(target = "followers", ignore = true) // If followers need special handling
+    @Mapping(target = "following", ignore = true) // If following needs special handling
     UserResponse toUserResponse(User user);
 
     void updateUser(@MappingTarget User user, UserUpdateRequest request);

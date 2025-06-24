@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
@@ -20,4 +21,7 @@ public interface UserFollowerRepository extends JpaRepository<UserFollower, Long
     // Lấy danh sách ID của following của user (User này đang theo dõi ai)
     @Query("SELECT uf.followingUser.id FROM UserFollower uf WHERE uf.follower.id = :userId")
     Set<String> findFollowingIdsByUserId(@Param("userId") String userId);
+
+    Optional<UserFollower> findByFollowerAndFollowingUser(User follower, User followingUser);
+
 }

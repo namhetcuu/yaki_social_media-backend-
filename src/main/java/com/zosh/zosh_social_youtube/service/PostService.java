@@ -37,6 +37,11 @@ public class PostService {
      * Tạo bài viết mới
      */
     public PostResponse createPost(PostCreationRequest request) {
+
+        // Kiểm tra dữ liệu nhận được từ request
+        System.out.println("Received caption: " + request.getCaption());
+        System.out.println("Received imageUrl: " + request.getImageUrl());
+
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
@@ -182,6 +187,21 @@ public class PostService {
         savedPostRepository.save(savedPost);
 
         // 5. Trả về thông tin bài viết
+        return postMapper.toPostResponse(post,user);
+    }
+
+    public PostResponse unsavePost(String postId, String userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
+        Post post = postRepository.findById(postId).orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
+
+        // Tìm savedPost tương ứng
+        SavedPost savedPost = savedPostRepository.findByUserAndPost(user, post)
+                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_SAVED_YET));
+
+        user.getSavedPosts().remove(savedPost);
+        savedPostRepository.save(savedPost);
+
         return postMapper.toPostResponse(post);
     }
 

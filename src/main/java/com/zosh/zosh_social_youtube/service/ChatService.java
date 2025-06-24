@@ -13,6 +13,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,29 +29,45 @@ public class ChatService {
     ChatRepository chatRepository;
     ChatMapper chatMapper;
     UserRepository userRepository;
+    UserService userService;
 
     @Transactional
-    public ChatResponse createChat(ChatRequest chatRequest) {
-        log.info("Tạo chat mới với tên: {}", chatRequest.getChatName());
+    public ChatResponse findOrCreatePersonalChat(String userId1, String userId2, String chatImage) {
+        log.info("Checking for existing personal chat between {} and {}", userId1, userId2);
 
-        // Lấy danh sách user từ userId
-        List<User> users = userRepository.findAllById(chatRequest.getUserIds());
-        if (users.isEmpty()) {
-            throw new AppException(ErrorCode.USER_NOT_EXISTED);
+        // Chuyển userId từ String -> User trước khi tìm chat
+        User user1 = userService.findUserById(userId1);
+        User user2 = userService.findUserById(userId2);
+
+        // Kiểm tra nếu userId1 == userId2 (không cho phép chat với chính mình)
+        if (user1.getId().equals(user2.getId())) {
+            throw new IllegalArgumentException("A user cannot chat with themselves.");
         }
 
-        // Tạo Chat entity
-        Chat chat = Chat.builder()
-                .chatName(chatRequest.getChatName())
-                .chatImage(chatRequest.getChatImage())
-                .users(users)
+        // Kiểm tra xem cuộc trò chuyện đã tồn tại chưa
+        List<Chat> existingChats = chatRepository.findPersonalChat(user1, user2);
+        for (Chat chat : existingChats) {
+            if (chat.getUsers().size() == 2) { // Chỉ lấy chat có đúng 2 người
+                log.info("Existing personal chat found: {}", chat.getId());
+                return chatMapper.toChatResponse(chat);
+            }
+        }
+
+        // Nếu chưa có, tạo mới cuộc trò chuyện
+        log.info("No existing chat found. Creating a new personal chat.");
+
+        Chat newChat = Chat.builder()
+                .chatName("Private Chat") // Hoặc đặt theo tên user
+                .chatImage(chatImage)
+                .users(List.of(user1, user2))
                 .build();
 
-        Chat savedChat = chatRepository.save(chat);
-        log.info("Chat được tạo thành công với ID: {}", savedChat.getId());
-
+        Chat savedChat = chatRepository.save(newChat);
         return chatMapper.toChatResponse(savedChat);
     }
+
+
+
 
     public ChatResponse findChatById(String chatId) {
         log.info("Tìm chat với ID: {}", chatId);
@@ -79,6 +96,17 @@ public class ChatService {
                 .map(chatMapper::toChatResponse)
                 .collect(Collectors.toList());
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    public void deleteChatById(String chatId) {
+        log.info("Deleting user with ID: {}", chatId);
+        chatRepository.deleteById(chatId);
+    }
+
+//    public void deleteAllChatsByUserId(Long userId) {
+//
+//    }
+
 
     //Kiểm tra xem hai người dùng có chat chung không
     ///public Optional<Chat> findChatBetweenUsers(String userId1, String userId2);

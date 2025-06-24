@@ -4,6 +4,7 @@ import com.zosh.zosh_social_youtube.dto.request.ApiResponse;
 import com.zosh.zosh_social_youtube.dto.request.UserCreationRequest;
 import com.zosh.zosh_social_youtube.dto.request.UserUpdateRequest;
 import com.zosh.zosh_social_youtube.dto.response.UserResponse;
+import com.zosh.zosh_social_youtube.dto.response.UserWithFollowStatusResponse;
 import com.zosh.zosh_social_youtube.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -83,7 +84,39 @@ public class UserController {
         UserResponse userResponse = userService.followUser(userId1, userId2);
 
         return ApiResponse.<UserResponse>builder()
+                .message("Follow thành công")
                 .result(userResponse)
                 .build();
     }
+
+    @DeleteMapping("/unfollow/{userId1}/{userId2}")
+    public ApiResponse<String> unfollowUser(@PathVariable String userId1, @PathVariable String userId2) {
+        userService.unfollowUser(userId1, userId2);
+        return ApiResponse.<String>builder()
+                .message("Unfollow thành công")
+                .result("OK")
+                .build();
+    }
+
+    @GetMapping("/users-with-follow-status/{currentUserId}")
+    public ApiResponse<List<UserWithFollowStatusResponse>> getUsersWithFollowStatus(@PathVariable String currentUserId) {
+        List<UserWithFollowStatusResponse> response = userService.getUsersWithFollowStatus(currentUserId);
+        return ApiResponse.<List<UserWithFollowStatusResponse>>builder()
+                .result(response)
+                .message("Danh sách người dùng và trạng thái follow")
+                .build();
+    }
+
+    @GetMapping("/search")
+    public ApiResponse<List<UserResponse>> searchUser(@RequestParam String query) {
+        log.info("Searching for users with query: {}", query);
+
+        List<UserResponse> users = userService.searchUsers(query);
+
+        return ApiResponse.<List<UserResponse>>builder()
+                .result(users)
+                .build();
+    }
+
+
 }

@@ -29,10 +29,10 @@ public enum ErrorCode {
     ALREADY_FOLLOWING(1019,"Already following",HttpStatus.CONFLICT),
     COMMENT_NOT_FOUND(1020,"Comment not found",HttpStatus.NOT_FOUND),
     CHAT_NOT_FOUND(1021, "Chat not found",HttpStatus.NOT_FOUND),
+    UNAUTHORIZED_ACCESS(1022,"Unauthorized access",HttpStatus.UNAUTHORIZED),
+    NOT_FOLLOWING(1023, "Not following", HttpStatus.NOT_FOUND),
+    POST_NOT_SAVED_YET(1024,"Not saved yet",HttpStatus.NOT_FOUND);
 
-//    FIRSTNAME_REQUIRED(1008,"first name must given",HttpStatus.BAD_REQUEST),
-//    LASTNAME_REQUIRED(1009,"last name must given",HttpStatus.BAD_REQUEST),
-    ;
     private int code;
     private String message;
     private HttpStatusCode httpStatusCode;

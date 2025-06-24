@@ -22,5 +22,27 @@ public class ReelsRequest {
     @NotBlank(message = "URL video không được để trống")
     String video;
 
+    public @NotNull(message = "User ID không được để trống") String getUserId() {
+        return userId;
+    }
 
+    public void setUserId(@NotNull(message = "User ID không được để trống") String userId) {
+        this.userId = userId;
+    }
+
+    public @NotBlank(message = "Tiêu đề không được để trống") String getTitle() {
+        return title;
+    }
+
+    public void setTitle(@NotBlank(message = "Tiêu đề không được để trống") String title) {
+        this.title = title;
+    }
+
+    public @NotBlank(message = "URL video không được để trống") String getVideo() {
+        return video;
+    }
+
+    public void setVideo(@NotBlank(message = "URL video không được để trống") String video) {
+        this.video = video;
+    }
 }

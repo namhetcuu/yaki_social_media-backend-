@@ -24,6 +24,16 @@ public class PostResponse {
     String authorUsername;
     Set<String> likedUsers; // Danh sách ID của những người đã thích bài viết (nếu cần)
     List<CommentResponse> comments;  // ✅ Thêm danh sách comments
+    boolean bookmarked;
+
+    public boolean isBookmarked() {
+        return bookmarked;
+    }
+
+    public void setBookmarked(boolean bookmarked) {
+        this.bookmarked = bookmarked;
+    }
+
     public String getAuthorId() {
         return authorId;
     }

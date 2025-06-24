@@ -33,6 +33,7 @@ public class MessageRequest {
 
     public void setUserId(String userId) {
         this.userId = userId;
+        
     }
 
     public String getChatId() {

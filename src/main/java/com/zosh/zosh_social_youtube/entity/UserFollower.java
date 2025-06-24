@@ -36,4 +36,36 @@ public class UserFollower {
     protected void onCreate() {
         this.followedAt = LocalDateTime.now();
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getFollowingUser() {
+        return followingUser;
+    }
+
+    public void setFollowingUser(User followingUser) {
+        this.followingUser = followingUser;
+    }
+
+    public User getFollower() {
+        return follower;
+    }
+
+    public void setFollower(User follower) {
+        this.follower = follower;
+    }
+
+    public LocalDateTime getFollowedAt() {
+        return followedAt;
+    }
+
+    public void setFollowedAt(LocalDateTime followedAt) {
+        this.followedAt = followedAt;
+    }
 }

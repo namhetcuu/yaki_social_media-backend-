@@ -14,6 +14,9 @@ public interface CommentMapper {
     //@Mapping(target = "userId", expression = "java(comment.getUser() != null ? comment.getUser().getId() : null)")
     //@Mapping(target = "username", expression = "java(comment.getUser() != null ? comment.getUser().getUsername() : null)")
     //@Mapping(target = "postId", expression = "java(comment.getPost() != null ? comment.getPost().getId() : null)")
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "content", source = "content")
+    @Mapping(target = "createdAt", source = "createdAt")
     @Mapping(target = "userId", expression = "java(comment.getUser() != null ? comment.getUser().getId() : null)")
     @Mapping(target = "postId", expression = "java(comment.getPost() != null ? comment.getPost().getId() : null)")
     CommentResponse toCommentResponse(Comment comment);

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/posts")
 @RequiredArgsConstructor
@@ -92,6 +93,13 @@ public class PostController {
                                                       @PathVariable String userId) {
         return ApiResponse.<PostResponse>builder()
                 .result(postService.savedPost(postId, userId))
+                .build();
+    }
+
+    @DeleteMapping("/unsave/{postId}/users/{userId}")
+    public ApiResponse<PostResponse> unsavePost(@PathVariable String postId, @PathVariable String userId) {
+        return ApiResponse.<PostResponse>builder()
+                .result(postService.unsavePost(postId,userId))
                 .build();
     }
 

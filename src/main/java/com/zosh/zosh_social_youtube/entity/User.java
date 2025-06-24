@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -64,6 +65,28 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Message> messages = new ArrayList<>();
 
+    // Các trường mới thêm vào
+    @Column(name = "profile_picture", insertable = true, updatable = true)
+    private String profilePicture;
+
+    @Column(name = "bio", insertable = true, updatable = true)
+    private String bio;
+
+    @Column(name = "date_joined" , insertable = true, updatable = true)
+    LocalDateTime dateJoined; // Ngày tham gia ứng dụng
+
+    @Column(name = "phone_number", insertable = true, updatable = true)
+    private String phoneNumber;
+
+    @Column(name = "location", insertable = true, updatable = true)
+    private String location;
+
+    @Column(name = "status", insertable = true, updatable = true)
+    private String status;
+
+    @Column(name = "is_active", insertable = true, updatable = true)
+    private Boolean isActive;
+
     public Set<UserFollower> getFollowers() {
         return followers;
     }
@@ -78,6 +101,67 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public LocalDateTime getDateJoined() {
+        return dateJoined;
+    }
+
+    public void setDateJoined(LocalDateTime dateJoined) {
+        this.dateJoined = dateJoined;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        dateJoined = LocalDateTime.now();
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
     public String getUsername() {

@@ -23,4 +23,36 @@ public class PostCreationRequest {
 
     //@NotBlank(message = "User ID không được để trống")
     String userId; // ID của người đăng bài
+
+    public @Size(max = 500, message = "CAPTION_INVALID") String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(@Size(max = 500, message = "CAPTION_INVALID") String caption) {
+        this.caption = caption;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }
